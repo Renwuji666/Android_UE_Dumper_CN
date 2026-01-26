@@ -19,9 +19,13 @@
 #include "UE/UEGameProfile.hpp"
 
 #include "UE/UEGameProfiles/ArenaBreakout.hpp"
+#include "UE/UEGameProfiles/DeltaForce.hpp"
+#include "UE/UEGameProfiles/Farlight.hpp"
+#include "UE/UEGameProfiles/Sfps2.hpp"
+#include "UE/UEGameProfiles/Valorant.hpp"
+/*
 #include "UE/UEGameProfiles/BlackClover.hpp"
 #include "UE/UEGameProfiles/Dislyte.hpp"
-#include "UE/UEGameProfiles/Farlight.hpp"
 #include "UE/UEGameProfiles/MortalKombat.hpp"
 #include "UE/UEGameProfiles/PES.hpp"
 #include "UE/UEGameProfiles/Torchlight.hpp"
@@ -29,7 +33,6 @@
 #include "UE/UEGameProfiles/RealBoxing2.hpp"
 #include "UE/UEGameProfiles/OdinValhalla.hpp"
 #include "UE/UEGameProfiles/Injustice2.hpp"
-#include "UE/UEGameProfiles/DeltaForce.hpp"
 #include "UE/UEGameProfiles/RooftopsParkour.hpp"
 #include "UE/UEGameProfiles/BabyYellow.hpp"
 #include "UE/UEGameProfiles/TowerFantasy.hpp"
@@ -45,20 +48,26 @@
 #include "UE/UEGameProfiles/ArkUltimate.hpp"
 #include "UE/UEGameProfiles/Auroria.hpp"
 #include "UE/UEGameProfiles/LineageW.hpp"
-
+*/
 std::vector<IGameProfile *> UE_Games = {
+    new ArenaBreakoutProfile(),
+    new DeltaForceProfile(),
+    new FarlightProfile(),
+    new ShuishaProfile(),
+    new ValorantProfile(),
+    /*
     new PESProfile(),
     new DislyteProfile(),
     new MortalKombatProfile(),
-    new FarlightProfile(),
+
     new TorchlightProfile(),
-    new ArenaBreakoutProfile(),
+
     new BlackCloverProfile(),
     new WutheringWavesProfile(),
     new RealBoxing2Profile(),
     new OdinValhallaProfile(),
     new Injustice2Profile(),
-    new DeltaForceProfile(),
+
     new RooftopParkourProfile(),
     new BabyYellowProfile(),
     new TowerFantasyProfile(),
@@ -74,9 +83,10 @@ std::vector<IGameProfile *> UE_Games = {
     new ArkUltimateProfile(),
     new AuroriaProfile(),
     new LineageWProfile(),
+    */
 };
 
-#define kUEDUMPER_VERSION "4.1.1"
+#define kUEDUMPER_VERSION "4.1.2"
 
 bool bNeededHelp = false;
 
@@ -87,6 +97,9 @@ int main(int argc, char **args)
     setbuf(stdin, nullptr);
 
     LOGI("Using UE Dumper %s", kUEDUMPER_VERSION);
+    LOGI("original author:MJx0 https://github.com/MJx0");
+    LOGI("Secondary creations from 曦曦(DreamFekk) https://github.com/DreamFekk");
+    LOGI("Thanks for my friend ZRO https://github.com/bikhx's help!!");
 
     KittyCmdln cmdline(argc, args);
 
@@ -309,7 +322,7 @@ int main(int argc, char **args)
                 LOGI("Dumping unreal lib from memory...");
                 std::string libDumpPath = KittyUtils::String::Fmt("%s/libUE_%p-%p.so", sDumpGameDir.c_str(), ue_elf.base(), ue_elf.end());
                 bool res = kMgr.dumpMemELF(ue_elf, libDumpPath);
-                LOGI("Dumping lib: %s.",  res ? "success" : "failed");
+                LOGI("Dumping lib: %s.", res ? "success" : "failed");
                 if (res)
                 {
                     LOGI("%s", libDumpPath.c_str());

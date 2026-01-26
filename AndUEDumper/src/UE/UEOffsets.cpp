@@ -202,6 +202,9 @@ std::string UE_Pointers::ToString() const
         kOUT_NS_MEMBER_P((*this), ObjObjects);
         kOUT_NS_MEMBER_P((*this), Engine);
         kOUT_NS_MEMBER_P((*this), World);
+        kOUT_NS_MEMBER_P((*this), Matrix);
+        kOUT_NS_MEMBER_P((*this), Physx);
+        kOUT_NS_MEMBER_P((*this), FrameCount);
 
         kOUT_NS_END();
     }

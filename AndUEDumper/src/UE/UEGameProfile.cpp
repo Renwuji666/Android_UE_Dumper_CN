@@ -85,7 +85,9 @@ UEVarsInitStatus IGameProfile::InitUEVars()
     if (!vm_rpm_ptr((void *)(_UEVars.ObjObjectsPtr + pOffsets->TUObjectArray.Objects),
                     &_UEVars.ObjObjects_Objects, sizeof(uintptr_t)))
         return UEVarsInitStatus::ERROR_INIT_OBJOBJECTS;
-
+    _UEVars.Matrix = GetMatrix();
+    _UEVars.Physx = GetPhysx();
+    _UEVars.FrameCount = GetFrameCount();
     UEWrappers::Init(GetUEVars());
 
     return UEVarsInitStatus::SUCCESS;

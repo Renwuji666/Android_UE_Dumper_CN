@@ -183,7 +183,9 @@ void UEDumper::DumpOffsetsInfo(BufferFmt &logsBufferFmt, BufferFmt &offsetsBuffe
     uintptr_t namesPtr = _profile->GetUEVars()->GetNamesPtr();
     uintptr_t objectsArrayPtr = _profile->GetUEVars()->GetGUObjectsArrayPtr();
     uintptr_t objObjectsPtr = _profile->GetUEVars()->GetObjObjectsPtr();
-
+    uintptr_t Matrix = _profile->GetUEVars()->GetMatrix();
+    uintptr_t Physx = _profile->GetUEVars()->GetPhysx();
+    uintptr_t FrameCount = _profile->GetUEVars()->GetFrameCount();
     // Find UEngine & UWorld
     uintptr_t UEnginePtr = 0, UWorldPtr = 0;
     if (((UE_UObject)UEWrappers::GetObjects()->GetObjectPtr(1)).GetIndex() == 1)
@@ -241,12 +243,28 @@ void UEDumper::DumpOffsetsInfo(BufferFmt &logsBufferFmt, BufferFmt &offsetsBuffe
         logsBufferFmt.append("==========================\n");
     }
 
+    if (!Matrix)
+        logsBufferFmt.append("Couldn't find refrence to Matrix.\n");
+    else
+        logsBufferFmt.append("Matrix: [<Base> + 0x{:X}] = 0x{:X}\n", Matrix - baseAddr, Matrix);
+    if (!Physx)
+        logsBufferFmt.append("Couldn't find refrence to Physx.\n");
+    else
+        logsBufferFmt.append("Physx: [<Base> + 0x{:X}] = 0x{:X}\n", Physx - baseAddr, Physx);
+    if (!FrameCount)
+        logsBufferFmt.append("Couldn't find refrence to FrameCount.\n");
+    else
+        logsBufferFmt.append("FrameCount: [<Base> + 0x{:X}] = 0x{:X}\n", FrameCount - baseAddr, FrameCount);
+    logsBufferFmt.append("==========================\n");
     UE_Pointers uEPointers{};
     uEPointers.Names = namesPtr - baseAddr;
     uEPointers.UObjectArray = objectsArrayPtr - baseAddr;
     uEPointers.ObjObjects = objObjectsPtr - baseAddr;
     uEPointers.Engine = UEnginePtr ? (UEnginePtr - baseAddr) : 0;
     uEPointers.World = UWorldPtr ? (UWorldPtr - baseAddr) : 0;
+    uEPointers.Matrix = Matrix ? (Matrix - baseAddr) : 0;
+    uEPointers.Physx = Physx ? (Physx - baseAddr) : 0;
+    uEPointers.FrameCount = FrameCount ? (FrameCount - baseAddr) : 0;
 
     offsetsBufferFmt.append("#pragma once\n\n#include <cstdint>\n\n\n");
     offsetsBufferFmt.append("{}\n\n{}", _profile->GetOffsets()->ToString(), uEPointers.ToString());
@@ -299,7 +317,7 @@ void UEDumper::GatherUObjects(BufferFmt &logsBufferFmt, BufferFmt &objsBufferFmt
                 }
             }
 
-            objsBufferFmt.append("[{:010}]: {}\n", object.GetIndex(), object.GetFullName());
+            objsBufferFmt.append("[{:010}] [{:016x}]: {}\n", object.GetIndex(),reinterpret_cast<uintptr_t>(object.GetAddress()) ,object.GetFullName());
         }
 
         objectsProgress++;

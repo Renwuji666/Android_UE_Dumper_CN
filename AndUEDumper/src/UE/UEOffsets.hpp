@@ -128,7 +128,9 @@ struct UE_Pointers
     uintptr_t ObjObjects = 0;
     uintptr_t Engine = 0;
     uintptr_t World = 0;
-
+    uintptr_t Matrix = 0;
+    uintptr_t Physx = 0;
+    uintptr_t FrameCount =0;
     std::string ToString() const;
 };
 
@@ -198,17 +200,19 @@ protected:
     uintptr_t GUObjectsArrayPtr;
     uintptr_t ObjObjectsPtr;
     uintptr_t ObjObjects_Objects;
-
+    uintptr_t Matrix;
+    uintptr_t Physx;
+    uintptr_t FrameCount;
     UE_Offsets *Offsets;
 
     std::function<std::string(int32_t)> pGetNameByID;
 
 public:
-    UEVars() : BaseAddress(0), NamesPtr(0), GUObjectsArrayPtr(0), ObjObjectsPtr(0), ObjObjects_Objects(0), Offsets(nullptr), pGetNameByID(nullptr)
+    UEVars() : BaseAddress(0), NamesPtr(0), GUObjectsArrayPtr(0), ObjObjectsPtr(0), ObjObjects_Objects(0),Matrix(0),Physx(0),FrameCount(0), Offsets(nullptr), pGetNameByID(nullptr)
     {
     }
 
-    UEVars(uintptr_t base, uintptr_t names, uintptr_t objectArray, uintptr_t objObjects, uintptr_t objects, UE_Offsets *offsets, const std::function<std::string(int32_t)> &pGetNameByID) : BaseAddress(base), NamesPtr(names), GUObjectsArrayPtr(objectArray), ObjObjectsPtr(objObjects), ObjObjects_Objects(objects), Offsets(offsets), pGetNameByID(pGetNameByID)
+    UEVars(uintptr_t base, uintptr_t names, uintptr_t objectArray, uintptr_t objObjects, uintptr_t objects,uintptr_t matrix,uintptr_t physx,uintptr_t framecount, UE_Offsets *offsets, const std::function<std::string(int32_t)> &pGetNameByID) : BaseAddress(base), NamesPtr(names), GUObjectsArrayPtr(objectArray), ObjObjectsPtr(objObjects), ObjObjects_Objects(objects), Offsets(offsets),Matrix(matrix),Physx(physx),FrameCount(framecount), pGetNameByID(pGetNameByID)
     {
     }
 
@@ -217,7 +221,9 @@ public:
     uintptr_t GetGUObjectsArrayPtr() const { return GUObjectsArrayPtr; };
     uintptr_t GetObjObjectsPtr() const { return ObjObjectsPtr; };
     uintptr_t GetObjObjects_Objects() const { return ObjObjects_Objects; };
-
+    uintptr_t GetMatrix() const { return Matrix; };
+    uintptr_t GetPhysx() const { return Physx; };
+    uintptr_t GetFrameCount() const { return FrameCount; };
     UE_Offsets *GetOffsets() const { return Offsets; };
 
     std::string GetNameByID(int32_t id) const;

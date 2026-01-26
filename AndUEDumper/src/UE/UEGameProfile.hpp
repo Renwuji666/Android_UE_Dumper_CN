@@ -53,7 +53,9 @@ public:
 
 protected:
     virtual uintptr_t GetGUObjectArrayPtr() const = 0;
-
+    virtual uintptr_t GetMatrix()  const = 0;
+    virtual uintptr_t GetPhysx() const = 0;
+    virtual uintptr_t GetFrameCount() const = 0;
     // GNames / NamePoolData
     virtual uintptr_t GetNamesPtr() const = 0;
 
@@ -67,4 +69,6 @@ protected:
     virtual uintptr_t findIdaPattern(PATTERN_MAP_TYPE map_type,
                                      const std::string &pattern, const int step,
                                      uint32_t skip_result = 0) const;
+
+
 };

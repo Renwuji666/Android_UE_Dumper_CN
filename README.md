@@ -1,8 +1,13 @@
-# Android Unreal Engine Dumper / UE Dumper
+# Android Unreal Engine Dumper / UE Dumper CN
+[中文](README_zh.md) | [English](README.md)
+
+Show respect for [MJx0](https://github.com/MJx0) !!!
+
+Thanks for my friend [ZRO](https://github.com/bikhx) 's help!!
 
 Generate sdk and functions script for unreal engine games on android.
 
-The dumper is based on [UE4Dumper-4.25](https://github.com/guttir14/UnrealDumper-4.25)
+The dumper is based on [AndUEDumper](https://github.com/MJx0/AndUEDumper)
 project.
 
 ## Features
@@ -11,38 +16,17 @@ project.
 * Can be compiled as executable for external and as library for internal use
 * Dump UE offsets, classes, structs, enums and functions
 * Generate function names json script to use with IDA & Ghidra etc
-* Symbol and pattern scanning to find GUObjectArray, GNames and NamePoolData addresses automatically
+* Symbol and pattern scanning to find GUObjectArray, GNames , Physx ,Matrix, FrameCount and NamePoolData addresses automatically
 * Find GEngine and GWorld in '.bss'
 * Dump UE library from memory
 
 ## Currently Supported Games
 
-* Ark Ultimate
-* Arena Breakout
-* Auroria
-* Black Clover M
-* Delta Force
-* Dislyte
-* Farlight 84
-* Injustice 2
-* Mortal Kombat
-* Odin Valhalla Rising
-* Real Boxing 2
-* Rooftops Parkour Pro
-* The Baby In Yellow
-* Torchlight: Infinite
-* Wuthering Waves
-* Blade Soul Revolution
-* Lineage 2 Revolution
-* Lineage W
-* eFootball (PES)
-* King Arthur Legends Rise
-* Night Crows
-* Century Age Of Ashes
-* Case 2 Animatronics
-* Hello Neighbor
-* Hello Neighbor Nicky's Diaries
-* Special Forces Group 2
+* Delta Force(CN)
+* Valorant(CN)
+* Arena Breakout(CN)
+* Farlight 84(CN)
+* 枪战特训2
 
 ## Library Usage
 
@@ -56,7 +40,7 @@ You will have to push the dumper in an executable directory like /data/local/tmp
 Use the compatible dumper, if game is 64bit use arm64 or x86_64, if 32bit then use arm or x86 version.
 
 ```bash
-Usage: ./UEDump3r [-h] [-o] [ options ]
+Usage: ./UEDump3r_arm64 [-h] [-o] [ options ]
 
 Required arguments:
    -o, --output        specify output directory path.
@@ -111,3 +95,5 @@ make clean && make
 * [Il2cppDumper](https://github.com/Perfare/Il2CppDumper)
 * [Dumper-7](https://github.com/Encryqed/Dumper-7)
 * [UEDumper](https://github.com/Spuckwaffel/UEDumper)
+* [MJx0](https://github.com/MJx0)
+* [ZRO]
