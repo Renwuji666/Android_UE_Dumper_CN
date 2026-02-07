@@ -1,0 +1,64 @@
+name: Android NDK Build
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NDK_VERSION: 26.3.11579264
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK
+        run: |
+          sdkmanager --install "ndk;${NDK_VERSION}"
+          echo "NDK_HOME=${ANDROID_SDK_ROOT}/ndk/${NDK_VERSION}" >> "${GITHUB_ENV}"
+
+      - name: Show build environment
+        run: |
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}"
+          echo "NDK_HOME=${NDK_HOME}"
+          "${NDK_HOME}/ndk-build" --version
+          make --version | head -n 1
+
+      - name: Build
+        working-directory: AndUEDumper
+        run: |
+          make clean
+          make
+
+      - name: Package artifacts
+        run: |
+          mkdir -p artifacts
+          cp -r AndUEDumper/libs artifacts/libs
+          if [ -d AndUEDumper/obj/local ]; then
+            cp -r AndUEDumper/obj/local artifacts/obj-local
+          fi
+          (
+            cd artifacts
+            find . -type f -print0 | xargs -0 sha256sum > SHA256SUMS.txt
+          )
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android_UE_Dumper_CN-${{ github.sha }}
+          path: artifacts
+          if-no-files-found: error
+          retention-days: 14
